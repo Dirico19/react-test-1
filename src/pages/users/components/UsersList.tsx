@@ -5,22 +5,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useAppSelector } from '../../../hooks/useStore';
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUsersActions } from '../actions/useUsersActions';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
+export interface UsersListInterface {
 
-export const UsersList = () => {
+}
+
+export const UsersList: React.FC<UsersListInterface> = () => {
     
-    const { users, loading, error } = useAppSelector(state => state.users);
-
-    const { dispatch, getAllUsers, removeUser } = useUsersActions();
+    const { users, loading, error, useGetUsers, useAddUser, useUpdateUser, useDeleteUser } = useUsersActions();
     
     useEffect(() => {
-        getAllUsers();
-    }, [dispatch]);
+        useGetUsers();
+    }, [useGetUsers]);
 
     return (
         <TableContainer component={Paper}>
@@ -54,7 +54,7 @@ export const UsersList = () => {
                             <TableCell>{user.email}</TableCell>
                             <TableCell>
                                 <Button 
-                                onClick={() => removeUser(user.id)}
+                                onClick={() => useDeleteUser(user.id)}
                                 variant='contained'
                                 color='error'
                                 size='small'

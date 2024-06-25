@@ -1,13 +1,31 @@
-import { useAppDispatch } from "../../../hooks/useStore"
-import { deleteUserById, getUsers } from "../../../redux/users/user.slice";
+import { useCallback } from "react";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore"
+import { addUser, deleteUserById, getUsers, updateUser } from "../../../redux/users/user.slice";
+import { User } from "../../../models";
 
 export const useUsersActions = () => {
     const dispatch = useAppDispatch();
-    const getAllUsers = () => {
+    const { users, loading, error } = useAppSelector(state => state.users);
+
+    const useGetUsers = useCallback(() => {
         dispatch(getUsers());
-    }
-    const removeUser = (id: string) => {
+    }, [dispatch]);
+    const useAddUser = useCallback((user: User) => {
+        dispatch(addUser(user));
+    }, [dispatch]);
+    const useUpdateUser = useCallback((user: User) => {
+        dispatch(updateUser(user));
+    }, [dispatch]);
+    const useDeleteUser = (id: string) => {
         dispatch(deleteUserById(id));
     }
-    return { dispatch, getAllUsers, removeUser };
+    return { 
+        users,
+        loading,
+        error,
+        useGetUsers,
+        useAddUser,
+        useUpdateUser,
+        useDeleteUser
+    };
 }

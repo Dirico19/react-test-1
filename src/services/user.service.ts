@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "../../models";
+import { User } from "../models";
 
 const apiBaseUrl = "https://665a428f003609eda45d7fea.mockapi.io/test-users/api/";
 
